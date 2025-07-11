@@ -1,4 +1,4 @@
-package brifu.puckdle.nhlapi;
+package brifu.puckdle.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,7 +39,6 @@ public class PlayerApiDTO {
 
         @JsonProperty("abbreviation")
         private String abbreviation;
-        // Getters and Setters
     }
 
     @Data
