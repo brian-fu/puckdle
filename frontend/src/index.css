@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Ice hockey inspired color palette */
+    --background: 210 40% 98%;
+    --foreground: 210 50% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 50% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 50% 12%;
+
+    /* Ice blue primary theme */
+    --primary: 200 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 200 100% 65%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 210 50% 12%;
+
+    --muted: 210 40% 94%;
+    --muted-foreground: 210 25% 55%;
+
+    --accent: 200 100% 95%;
+    --accent-foreground: 200 100% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Game feedback colors - Wordle style */
+    --correct: 120 100% 35%;
+    --correct-foreground: 0 0% 100%;
+    --close: 45 100% 50%;
+    --close-foreground: 0 0% 0%;
+    --incorrect: 210 10% 65%;
+    --incorrect-foreground: 0 0% 100%;
+
+    --border: 210 40% 90%;
+    --input: 210 40% 96%;
+    --ring: 200 100% 35%;
+
+    /* Hockey-themed gradients */
+    --gradient-ice: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+
+    /* Hockey rink shadows */
+    --shadow-ice: 0 4px 20px -2px hsl(var(--primary) / 0.1);
+    --shadow-card: 0 2px 10px -1px hsl(var(--primary) / 0.05);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark ice theme */
+    --background: 210 50% 8%;
+    --foreground: 210 40% 95%;
+
+    --card: 210 50% 10%;
+    --card-foreground: 210 40% 95%;
+
+    --popover: 210 50% 10%;
+    --popover-foreground: 210 40% 95%;
+
+    --primary: 200 100% 55%;
+    --primary-foreground: 210 50% 8%;
+    --primary-glow: 200 100% 75%;
+
+    --secondary: 210 40% 15%;
+    --secondary-foreground: 210 40% 95%;
+
+    --muted: 210 40% 12%;
+    --muted-foreground: 210 25% 65%;
+
+    --accent: 200 100% 15%;
+    --accent-foreground: 200 100% 75%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 210 50% 8%;
+
+    /* Dark mode feedback colors */
+    --correct: 120 100% 45%;
+    --correct-foreground: 0 0% 0%;
+    --close: 45 100% 60%;
+    --close-foreground: 0 0% 0%;
+    --incorrect: 210 15% 45%;
+    --incorrect-foreground: 0 0% 100%;
+
+    --border: 210 40% 20%;
+    --input: 210 40% 15%;
+    --ring: 200 100% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
