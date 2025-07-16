@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class PlayerApiDTO {
 
-    @JsonProperty("id")
-    private int id;
+    @JsonProperty("playerId")
+    private int playerId;
 
     @JsonProperty("isActive")
     private boolean isActive;
@@ -18,10 +18,10 @@ public class PlayerApiDTO {
     private int currentTeamId;
 
     @JsonProperty("firstName")
-    private String firstName;
+    private FirstName firstName;
 
     @JsonProperty("lastName")
-    private String lastName;
+    private LastName lastName;
 
     @JsonProperty("sweaterNumber")
     private int sweaterNumber;
@@ -32,15 +32,33 @@ public class PlayerApiDTO {
     @JsonProperty("birthDate")
     private String birthDate;
 
-    @JsonProperty("birthCity")
-    private String birthCity;
-
     @JsonProperty("birthStateProvince")
-    private String birthStateProvince;
+    private BirthStateProvince birthStateProvince;
 
     @JsonProperty("birthCountry")
     private String birthCountry;
 
     @JsonProperty("shootsCatches")
     private String shootsCatches;
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class FirstName {
+        @JsonProperty("default")
+        private String firstName;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class LastName {
+        @JsonProperty("default")
+        private String lastName;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class BirthStateProvince {
+        @JsonProperty("default")
+        private String BirthStateProvince;
+    }
 }

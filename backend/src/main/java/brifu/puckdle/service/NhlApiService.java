@@ -1,7 +1,9 @@
 package brifu.puckdle.service;
 
 import brifu.puckdle.nhlapi.NhlApiClient;
-import brifu.puckdle.dto.PlayerApiDTO;
+import brifu.puckdle.model.dto.PlayerApiDTO;
+import brifu.puckdle.model.Player;
+import brifu.puckdle.util.PlayerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,12 @@ public class NhlApiService {
         this.nhlApiClient = nhlApiClient;
     }
 
-    public PlayerApiDTO getPlayerById(int playerId) {
-        return nhlApiClient.getPlayerById(playerId);
+    public Player getPlayerById(int playerId) {
+        try {
+            return PlayerMapper.fromPlayerApiDTO(nhlApiClient.getPlayerById(playerId));
+        } catch (Exception e) {
+            System.err.println("Error fetching player with ID: " + playerId);
+            return null;
+        }
     }
 }

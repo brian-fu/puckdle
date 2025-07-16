@@ -1,6 +1,7 @@
 package brifu.puckdle.nhlapi;
 
-import brifu.puckdle.dto.PlayerApiDTO;
+import brifu.puckdle.model.dto.PlayerApiDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -8,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class NhlApiClient {
 
-    private static final String BASE_URL = "https://api-web.nhle.com/v1";
+    private static final String BASE_URL = "https://api-web.nhle.com";
 
     private final RestTemplate restTemplate;
 
@@ -18,9 +19,9 @@ public class NhlApiClient {
     }
 
     public PlayerApiDTO getPlayerById(int playerId) {
-        String url = BASE_URL + "/player/" + playerId;
+        String url =  BASE_URL + "/v1/player/" + playerId + "/landing";
         return restTemplate.getForObject(url, PlayerApiDTO.class);
-    }
 
+    }
 }
 

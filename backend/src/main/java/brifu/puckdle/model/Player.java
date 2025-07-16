@@ -10,14 +10,14 @@ import java.time.Period;
 @Data
 public class Player {
 
-    private int id;
-    private int currentTeamId;
-    private int jerseyNumber;
-    private int age;
+    private int playerId;
     private boolean isActive;
-
+    private int currentTeamId;
     private String firstName;
     private String lastName;
+
+    private int jerseyNumber;
+    private int age;
     private String position;
 
     private String birthStateProvince;
@@ -25,12 +25,12 @@ public class Player {
     private String shootsCatches;
 
     // Constructor
-    public Player(int id, boolean isActive, int currentTeamId, String firstName, String lastName,
-                  int sweaterNumber, String position, String birthDate, String birthCity,
+    public Player(int playerId, boolean isActive, int currentTeamId, String firstName, String lastName,
+                  int jerseyNumber, String position, String birthDate,
                   String birthStateProvince, String birthCountry, String shootsCatches) {
-        this.id = id;
+        this.playerId = playerId;
         this.currentTeamId = currentTeamId;
-        this.jerseyNumber = sweaterNumber;
+        this.jerseyNumber = jerseyNumber;
         this.age = calculateAge(birthDate);
         this.isActive = isActive;
 
