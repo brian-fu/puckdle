@@ -1,12 +1,12 @@
 package brifu.puckdle.util;
 
 import brifu.puckdle.model.Player;
-import brifu.puckdle.model.dto.PlayerApiDTO;
+import brifu.puckdle.model.dto.PlayerDTO;
 
 public class PlayerMapper {
 
     // Converts a PlayerApiDTO to a Player object
-    public static Player fromPlayerApiDTO(PlayerApiDTO dto) {
+    public static Player fromPlayerDTO(PlayerDTO dto) {
         return new Player(
                 dto.getPlayerId(),
                 dto.isActive(),

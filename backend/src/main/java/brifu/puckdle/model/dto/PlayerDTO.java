@@ -6,7 +6,7 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class PlayerApiDTO {
+public class PlayerDTO {
 
     @JsonProperty("playerId")
     private int playerId;

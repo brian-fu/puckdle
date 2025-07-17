@@ -1,5 +1,6 @@
 package brifu.puckdle;
 
+import brifu.puckdle.nhlapi.NhlApiClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
