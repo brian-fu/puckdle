@@ -34,5 +34,10 @@ public class NhlApiClient {
         String url = BASE_URL_REST + "/en/team";
         return restTemplate.getForObject(url, TeamListDTO.class);
     }
+
+    public TeamDTO getTeamByTricode(String teamCode){
+        String url = BASE_URL_WEB + "/v1/roster/" + teamCode + "/current";
+        return restTemplate.getForObject(url, TeamDTO.class);
+    }
 }
 

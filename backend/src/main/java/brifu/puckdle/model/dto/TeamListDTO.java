@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.util.List;
 
+// DTO For getAllTeams API Call
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamListDTO {

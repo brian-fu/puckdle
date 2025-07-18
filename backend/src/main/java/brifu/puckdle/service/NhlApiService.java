@@ -21,6 +21,7 @@ public class NhlApiService {
         this.nhlApiClient = nhlApiClient;
     }
 
+    // Player Related Methods
     public Player getPlayerById(int playerId) {
         try {
             return PlayerMapper.fromPlayerDTO(nhlApiClient.getPlayerById(playerId));
@@ -30,6 +31,9 @@ public class NhlApiService {
         }
     }
 
+
+
+    // Team Related Methods
     public HashMap<Integer, Team> getAllTeams(){
         try {
             TeamListDTO teamListDTO = nhlApiClient.getAllTeams();
