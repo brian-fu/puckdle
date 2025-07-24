@@ -11,7 +11,6 @@ import java.time.Period;
 public class Player {
 
     private int playerId;
-    private boolean isActive;
     private int currentTeamId;
     private String firstName;
     private String lastName;
@@ -25,14 +24,13 @@ public class Player {
     private String shootsCatches;
 
     // Constructor
-    public Player(int playerId, boolean isActive, int currentTeamId, String firstName, String lastName,
+    public Player(int playerId, int currentTeamId, String firstName, String lastName,
                   int jerseyNumber, String position, String birthDate,
                   String birthStateProvince, String birthCountry, String shootsCatches) {
         this.playerId = playerId;
         this.currentTeamId = currentTeamId;
         this.jerseyNumber = jerseyNumber;
         this.age = calculateAge(birthDate);
-        this.isActive = isActive;
 
         this.firstName = firstName;
         this.lastName = lastName;

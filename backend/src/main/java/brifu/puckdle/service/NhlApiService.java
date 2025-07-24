@@ -21,6 +21,12 @@ public class NhlApiService {
     }
 
     // Player Related Methods
+    /**
+     * Fetches a Player by their ID and returns a Player object.
+     *
+     * @param playerId The ID of the player to fetch.
+     * @return Player object containing player details, or null if not found.
+     */
     public Player getPlayerById(int playerId) {
         try {
             return PlayerMapper.fromPlayerDTO(nhlApiClient.getPlayerById(playerId));

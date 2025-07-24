@@ -19,16 +19,19 @@ public class TeamMapper {
 
         for (PlayerDTO player : teamRosterDTO.getForwards()) {
             Player forward = PlayerMapper.fromPlayerDTO(player);
+            forward.setCurrentTeamId(teamDTO.getId());
             forwards.put(forward.getPlayerId(), forward);
         }
 
         for (PlayerDTO player : teamRosterDTO.getDefensemen()) {
             Player defenseman = PlayerMapper.fromPlayerDTO(player);
+            defenseman.setCurrentTeamId(teamDTO.getId());
             defensemen.put(defenseman.getPlayerId(), defenseman);
         }
 
         for (PlayerDTO player : teamRosterDTO.getGoalies()) {
             Player goalie = PlayerMapper.fromPlayerDTO(player);
+            goalie.setCurrentTeamId(teamDTO.getId());
             goalies.put(goalie.getPlayerId(), goalie);
         }
 

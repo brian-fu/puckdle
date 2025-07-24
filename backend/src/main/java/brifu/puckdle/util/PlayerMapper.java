@@ -9,7 +9,6 @@ public class PlayerMapper {
     public static Player fromPlayerDTO(PlayerDTO dto) {
         return new Player(
                 dto.getPlayerId(),
-                dto.isActive(),
                 dto.getCurrentTeamId(),
                 dto.getFirstName() != null ? dto.getFirstName().getFirstName() : null,
                 dto.getLastName() != null ? dto.getLastName().getLastName() : null,

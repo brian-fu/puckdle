@@ -1,5 +1,6 @@
 package brifu.puckdle.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -8,11 +9,8 @@ import lombok.Data;
 @Data
 public class PlayerDTO {
 
-    @JsonProperty("playerId")
+    @JsonAlias({"id", "playerId"})
     private int playerId;
-
-    @JsonProperty("isActive")
-    private boolean isActive;
 
     @JsonProperty("currentTeamId")
     private int currentTeamId;
@@ -26,7 +24,7 @@ public class PlayerDTO {
     @JsonProperty("sweaterNumber")
     private int sweaterNumber;
 
-    @JsonProperty("position")
+    @JsonAlias({"positionCode", "position"})
     private String position;
 
     @JsonProperty("birthDate")
