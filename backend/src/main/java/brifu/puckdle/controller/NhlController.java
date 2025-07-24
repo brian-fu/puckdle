@@ -31,8 +31,8 @@ public class NhlController {
     }
 
     @GetMapping("/teams")
-    public ResponseEntity<HashMap<Integer, Team>> getAllTeams() {
-        HashMap<Integer, Team> teams = nhlApiService.getAllTeams();
+    public ResponseEntity<HashMap<Integer, Team>> getTeamList() {
+        HashMap<Integer, Team> teams = nhlApiService.getTeamList();
         if (teams != null && !teams.isEmpty()) {
             return ResponseEntity.ok(teams);
         } else {

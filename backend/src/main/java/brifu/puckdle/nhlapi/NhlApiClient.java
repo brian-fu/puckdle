@@ -30,14 +30,14 @@ public class NhlApiClient {
     }
 
     // Team Related API calls
-    public TeamListDTO getAllTeams() {
+    public TeamListDTO getTeamList() {
         String url = BASE_URL_REST + "/en/team";
         return restTemplate.getForObject(url, TeamListDTO.class);
     }
 
-    public TeamDTO getTeamByTricode(String teamCode){
+    public TeamRosterDTO getTeamRosterByTricode(String teamCode){
         String url = BASE_URL_WEB + "/v1/roster/" + teamCode + "/current";
-        return restTemplate.getForObject(url, TeamDTO.class);
+        return restTemplate.getForObject(url, TeamRosterDTO.class);
     }
 }
 

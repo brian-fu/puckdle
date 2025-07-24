@@ -3,10 +3,9 @@ package brifu.puckdle.service;
 import brifu.puckdle.nhlapi.NhlApiClient;
 import brifu.puckdle.model.Player;
 import brifu.puckdle.model.Team;
-import brifu.puckdle.util.PlayerMapper;
-import brifu.puckdle.util.TeamMapper;
+import brifu.puckdle.util.*;
 
-import brifu.puckdle.model.dto.TeamListDTO;
+import brifu.puckdle.model.dto.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,18 +30,47 @@ public class NhlApiService {
         }
     }
 
-
-
     // Team Related Methods
-    public HashMap<Integer, Team> getAllTeams(){
+    /**
+     * Fetches a team's Roster by its tricode and returns a TeamRosterDTO object.
+     *
+     * @return TeamRosterDTO object containing team details, or null if not found.
+     */
+    public TeamRosterDTO getTeamRosterByTricode(String triCode) {
         try {
-            TeamListDTO teamListDTO = nhlApiClient.getAllTeams();
+            TeamRosterDTO teamRosterDTO = nhlApiClient.getTeamRosterByTricode(triCode);
+            if (teamRosterDTO == null) {
+                System.err.println("No team found with tricode: " + triCode);
+                return null;
+            }
+            return teamRosterDTO;
+        } catch (Exception e) {
+            System.err.println("Error fetching team with tricode: " + triCode + " - " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Fetches all NHL teams and maps them to a HashMap with team ID as the key.
+     *
+     * @return A HashMap where the key is the team ID and the value is the Team object.
+     */
+    public HashMap<Integer, Team> getTeamList(){
+        try {
+            TeamListDTO teamListDTO = nhlApiClient.getTeamList();
 
             HashMap<Integer, Team> teams = new HashMap<>();
 
-            for (var teamDTO : teamListDTO.getTeams()) {
-                Team team = TeamMapper.fromTeamDTO(teamDTO);
-                teams.put(team.getId(), team);
+            for (TeamDTO teamDTO : teamListDTO.getTeams()) {
+
+                try {
+                    TeamRosterDTO teamRosterDTO = nhlApiClient.getTeamRosterByTricode(teamDTO.getTriCode());
+                    Team team = TeamMapper.fromTeamDTO(teamDTO, teamRosterDTO);
+                    teams.put(team.getId(), team);
+                } catch (Exception e) {
+                    System.err.println("Error fetching roster for team: " + teamDTO.getFullName() + " - " + e.getMessage());
+                    continue; // Skip this team if there's an error fetching the roster
+                }
             }
             return teams;
         }
@@ -51,6 +79,4 @@ public class NhlApiService {
             return null;
         }
     }
-
-
 }
