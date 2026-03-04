@@ -1,0 +1,65 @@
+services:
+  frontend:
+    container_name: puckdle_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    depends_on:
+      py-backend:
+        condition: service_healthy
+
+  py-backend:
+    container_name: puckdle_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/puckdle_db
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=False
+      - SECRET_KEY=dev-secret-change-in-production
+      - CORS_ORIGINS=["http://localhost:3000"]
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+
+  db:
+    container_name: puckdle_db
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=puckdle_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d puckdle_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

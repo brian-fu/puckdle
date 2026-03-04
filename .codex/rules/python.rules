@@ -1,0 +1,7 @@
+# Allow dependency installation and testing
+prefix_rule(pattern=["pip", "install"], decision="allow")
+prefix_rule(pattern=["pytest"], decision="allow")
+
+# Alembic (Database Migrations)
+prefix_rule(pattern=["alembic", "revision", "--autogenerate"], decision="allow", justification="Generating migration files is non-destructive.")
+prefix_rule(pattern=["alembic", "upgrade", "head"], decision="ask", justification="Applying migrations alters database state. Human review required.")
