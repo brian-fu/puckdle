@@ -1,0 +1,7 @@
+prefix_rule(pattern=["git", "status"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+
+prefix_rule(pattern=["git", "push", "--force"], decision="forbidden", justification="Never overwrite remote history.")
+prefix_rule(pattern=["git", "push", "-f"], decision="forbidden")
+prefix_rule(pattern=["git", "branch", "-D"], decision="ask", justification="Confirm before deleting local branches.")
