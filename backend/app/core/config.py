@@ -11,21 +11,19 @@ class Settings(BaseSettings):
     """Application settings."""
 
     DATABASE_URL: str
+    API_HOST: str 
+    API_PORT: int 
+    DEBUG: bool 
     SECRET_KEY: str
+    CORS_ORIGINS: List[str] 
+    ALGORITHM: str 
+    ACCESS_TOKEN_EXPIRE_MINUTES: int 
 
-    API_HOST: str = "0.0.0.0"
-    API_PORT: int = 8000
-    DEBUG: bool = False
-
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-    ]
-
-    ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-
-    model_config = SettingsConfigDict(env_file=str(ENV_FILE_PATH), case_sensitive=True)
+    model_config = SettingsConfigDict(
+        env_file=str(ENV_FILE_PATH), 
+        case_sensitive=True, 
+        extra="ignore"
+    )
 
 @lru_cache()
 def get_settings() -> Settings:
