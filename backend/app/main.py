@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import get_settings
+from backend.app.config import get_settings
 
 settings = get_settings()
 

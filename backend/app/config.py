@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     API_HOST: str 
     API_PORT: int 
+    NHL_API_BASE_URL: str
     DEBUG: bool 
     SECRET_KEY: str
     CORS_ORIGINS: List[str] 
