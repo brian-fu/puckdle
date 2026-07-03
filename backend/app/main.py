@@ -13,6 +13,7 @@ from app.services import NHLAPIError
 
 settings = get_settings()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup execution
@@ -42,13 +43,14 @@ async def lifespan(app: FastAPI):
     engine.dispose()
     print("Application teardown executing...")
 
+
 def create_app() -> FastAPI:
 
     app = FastAPI(
         title="Puckdle",
         description="REST API for Puckdle application",
         version="1.0.0",
-        lifespan=lifespan
+        lifespan=lifespan,
     )
 
     # CORS Configuration
@@ -57,7 +59,7 @@ def create_app() -> FastAPI:
         allow_origins=settings.CORS_ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
-        allow_headers=["*"]
+        allow_headers=["*"],
     )
 
     # Map upstream NHL API failures to clean HTTP responses.
@@ -75,5 +77,5 @@ def create_app() -> FastAPI:
 
     return app
 
-app = create_app()
 
+app = create_app()

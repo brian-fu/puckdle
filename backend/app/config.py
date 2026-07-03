@@ -8,6 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 ROOT_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE_PATH = ROOT_DIR / ".env"
 
+
 class Settings(BaseSettings):
     """Application settings."""
 
@@ -20,15 +21,14 @@ class Settings(BaseSettings):
     NHL_API_TIMEOUT: float = 10.0
     DEBUG: bool
     SECRET_KEY: str
-    CORS_ORIGINS: List[str] 
-    ALGORITHM: str 
-    ACCESS_TOKEN_EXPIRE_MINUTES: int 
+    CORS_ORIGINS: List[str]
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     model_config = SettingsConfigDict(
-        env_file=str(ENV_FILE_PATH), 
-        case_sensitive=True, 
-        extra="ignore"
+        env_file=str(ENV_FILE_PATH), case_sensitive=True, extra="ignore"
     )
+
 
 @lru_cache()
 def get_settings() -> Settings:

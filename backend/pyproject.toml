@@ -1,14 +1,6 @@
-[tool.ruff]
+[tool.black]
 line-length = 88
-target-version = "py311"
-
-[tool.ruff.lint]
-# pycodestyle errors, pyflakes, isort, pyupgrade, flake8-bugbear.
-select = ["E", "F", "I", "UP", "B"]
-
-[tool.ruff.lint.flake8-bugbear]
-# FastAPI relies on function calls (Depends/Query) as argument defaults.
-extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
+target-version = ["py311"]
 
 [tool.pytest.ini_options]
 # Run from backend/ so the `app.*` import root resolves.
