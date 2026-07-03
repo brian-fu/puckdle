@@ -26,6 +26,11 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/backend
+    # Loads NHL_API_BASE_URL, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, etc.
+    # (.env is excluded from the image via .dockerignore, so inject it at runtime).
+    env_file:
+      - ./backend/.env
+    # These override the .env values for the container network / deployment.
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/puckdle_db
       - API_HOST=0.0.0.0

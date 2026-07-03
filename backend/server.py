@@ -1,6 +1,6 @@
 import uvicorn
 from app.main import create_app
-from backend.app.config import get_settings
+from app.config import get_settings
 
 
 settings = get_settings()

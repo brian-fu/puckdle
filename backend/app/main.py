@@ -3,26 +3,33 @@ import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 
-from backend.app.config import get_settings
+from app.config import get_settings
+from app.database import engine
 
 settings = get_settings()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup execution
-    # Initialize database connection pools & ML models 
+    # Verify database connectivity before serving traffic.
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+
     host = "localhost" if settings.API_HOST == "0.0.0.0" else settings.API_HOST
     docs_url = f"http://{host}:{settings.API_PORT}/docs"
-    
+
     print("-" * 40)
     print(f"Puckdle API Started")
+    print(f"Database: connected")
     print(f"Swagger UI: {docs_url}")
     print("-" * 40)
-    
+
     yield
     # Teardown execution
-    # Close database connections
+    # Release pooled database connections.
+    engine.dispose()
     print("Application teardown executing...")
 
 def create_app() -> FastAPI:

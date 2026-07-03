@@ -4,7 +4,8 @@ from typing import List
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+# backend/ directory — where .env lives and the app root (WORKDIR /backend in Docker).
+ROOT_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE_PATH = ROOT_DIR / ".env"
 
 class Settings(BaseSettings):

@@ -6,3 +6,7 @@ psycopg2-binary==2.9.11
 
 # Lint
 ruff==0.3.2
+
+# Test
+pytest==9.1.1
+pytest-cov==7.1.0

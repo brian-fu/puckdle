@@ -1,3 +1,0 @@
-prefix_rule(pattern=["npm", "install"], decision="allow")
-prefix_rule(pattern=["npm", "run", "build"], decision="allow")
-prefix_rule(pattern=["npm", "run", "lint"], decision="allow")

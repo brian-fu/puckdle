@@ -1,3 +1,0 @@
-prefix_rule(pattern=["rm", "-rf", "backend/"], decision="forbidden")
-prefix_rule(pattern=["rm", "-rf", "frontend/"], decision="forbidden")
-prefix_rule(pattern=["rm", "-rf", "/"], decision="forbidden")

@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd backend 2>/dev/null || exit 0; [ -x .venv/bin/pytest ] || exit 0; ./.venv/bin/pytest -q 1>&2 || exit 2",
+            "timeout": 120,
+            "statusMessage": "Running backend tests..."
+          }
+        ]
+      }
+    ]
+  }
+}
