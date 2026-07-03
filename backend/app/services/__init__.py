@@ -1,3 +1,3 @@
-from .nhl import NHLService
+from .nhl import NHLAPIError, NHLService
 
-__all__ = ["NHLService"]
+__all__ = ["NHLAPIError", "NHLService"]
