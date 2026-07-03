@@ -12,10 +12,13 @@ class Settings(BaseSettings):
     """Application settings."""
 
     DATABASE_URL: str
-    API_HOST: str 
-    API_PORT: int 
+    API_HOST: str
+    API_PORT: int
     NHL_API_BASE_URL: str
-    DEBUG: bool 
+    NHL_SEARCH_API_BASE_URL: str
+    NHL_STATS_API_BASE_URL: str
+    NHL_API_TIMEOUT: float = 10.0
+    DEBUG: bool
     SECRET_KEY: str
     CORS_ORIGINS: List[str] 
     ALGORITHM: str 
