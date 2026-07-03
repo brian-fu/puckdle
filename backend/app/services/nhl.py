@@ -72,6 +72,4 @@ class NHLService:
         params: dict[str, Any] = {"limit": limit}
         if categories:
             params["categories"] = categories
-        return await self._get(
-            self._api_base, "skater-stats-leaders/current", params
-        )
+        return await self._get(self._api_base, "skater-stats-leaders/current", params)

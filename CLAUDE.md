@@ -62,8 +62,8 @@ Import root is `app.*` (Docker `WORKDIR /backend`; run via `server.py`).
 ```
 backend/
 ├── server.py            # Uvicorn entrypoint (container CMD)
-├── requirements.txt     # all deps (app + ruff + pytest/coverage)
-├── pyproject.toml       # ruff, pytest & coverage config
+├── requirements.txt     # all deps (app + black + pytest/coverage)
+├── pyproject.toml       # black, pytest & coverage config
 ├── .env                 # loaded by app/config.py (git- & docker-ignored)
 ├── tests/               # pytest suite (mirrors app/ structure)
 └── app/
@@ -135,12 +135,12 @@ frontend/src/app/
 ## Local dev
 
 Runtime is Docker-only, but a `backend/.venv` (Python) exists for editor
-autocomplete, linting, and type-checking:
+autocomplete, formatting, and type-checking:
 
 ```bash
 cd backend && source .venv/bin/activate   # tooling only, not for running the app
-pip install -r requirements.txt            # first time: app + ruff + pytest
-ruff check .                              # lint (config in pyproject.toml)
+pip install -r requirements.txt            # first time: app + black + pytest
+black .                                   # format (config in pyproject.toml)
 pytest                                    # tests + coverage (config in pyproject.toml)
 ```
 
