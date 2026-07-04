@@ -47,18 +47,30 @@ class NHLService:
             raise NHLAPIError(504, f"NHL API unreachable for {path}") from exc
         return response.json()
 
-    async def search_players(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
-        return await self._get(
-            self._search_base,
-            "search/player",
-            {"culture": "en-us", "limit": limit, "q": query},
-        )
+    async def search_players(
+        self, query: str, limit: int = 10, active: bool = False
+    ) -> list[dict[str, Any]]:
+        params: dict[str, Any] = {"culture": "en-us", "limit": limit, "q": query}
+        if active:
+            # Upstream restricts results to currently active players.
+            params["active"] = "true"
+        return await self._get(self._search_base, "search/player", params)
 
     async def get_player(self, player_id: int) -> dict[str, Any]:
         return await self._get(self._api_base, f"player/{player_id}/landing")
 
     async def list_teams(self) -> dict[str, Any]:
+        # Every franchise the NHL has ever had, including defunct/relocated ones.
         return await self._get(self._stats_base, "team")
+
+    async def list_current_teams(self) -> list[dict[str, Any]]:
+        """Return only the teams currently in the league.
+
+        Derived from live standings, which list exactly the 32 active teams;
+        the stats ``team`` endpoint mixes in defunct/relocated franchises.
+        """
+        standings = await self.get_standings()
+        return standings.get("standings", [])
 
     async def get_roster(self, team: str, season: str = "current") -> dict[str, Any]:
         return await self._get(self._api_base, f"roster/{team}/{season}")

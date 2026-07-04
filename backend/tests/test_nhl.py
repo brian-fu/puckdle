@@ -28,10 +28,24 @@ LANDING_FIXTURE = {
     "position": "C",
     "sweaterNumber": 97,
     "currentTeamAbbrev": "EDM",
+    "isActive": True,
     "birthDate": "1997-01-13",
     "birthCountry": "CAN",
     "heightInInches": 73,
     "weightInPounds": 193,
+}
+
+STANDINGS_FIXTURE = {
+    "standings": [
+        {
+            "teamAbbrev": {"default": "COL"},
+            "teamName": {"default": "Colorado Avalanche"},
+            "teamCommonName": {"default": "Avalanche"},
+            "conferenceName": "Western",
+            "divisionName": "Central",
+            "teamLogo": "https://assets.nhle.com/logos/nhl/svg/COL_light.svg",
+        }
+    ]
 }
 
 
@@ -70,6 +84,38 @@ def test_search_players_maps_results() -> None:
     ]
 
 
+def test_search_active_flag_forwards_upstream_param() -> None:
+    captured: dict[str, str | None] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["active"] = request.url.params.get("active")
+        return httpx.Response(200, json=SEARCH_FIXTURE)
+
+    _use_handler(handler)
+
+    response = client.get(
+        "/api/players/search", params={"q": "mcdavid", "active": True}
+    )
+
+    assert response.status_code == 200
+    assert captured["active"] == "true"
+
+
+def test_search_without_active_omits_upstream_param() -> None:
+    captured: dict[str, str | None] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["active"] = request.url.params.get("active")
+        return httpx.Response(200, json=SEARCH_FIXTURE)
+
+    _use_handler(handler)
+
+    response = client.get("/api/players/search", params={"q": "mcdavid"})
+
+    assert response.status_code == 200
+    assert captured["active"] is None
+
+
 def test_get_player_flattens_landing() -> None:
     _use_handler(lambda request: httpx.Response(200, json=LANDING_FIXTURE))
 
@@ -81,6 +127,25 @@ def test_get_player_flattens_landing() -> None:
     assert body["last_name"] == "McDavid"
     assert body["team_abbrev"] == "EDM"
     assert body["sweater_number"] == 97
+    assert body["is_active"] is True
+
+
+def test_current_teams_maps_standings() -> None:
+    _use_handler(lambda request: httpx.Response(200, json=STANDINGS_FIXTURE))
+
+    response = client.get("/api/teams/current")
+
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "abbrev": "COL",
+            "name": "Colorado Avalanche",
+            "common_name": "Avalanche",
+            "conference": "Western",
+            "division": "Central",
+            "logo": "https://assets.nhle.com/logos/nhl/svg/COL_light.svg",
+        }
+    ]
 
 
 def test_standings_passthrough() -> None:

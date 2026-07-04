@@ -109,13 +109,18 @@ for a new resource:
 ### Current state (keep this updated)
 
 - Routes: `GET /health` plus the NHL router under `/api` (`app/api/nhl.py`):
-  player search/detail, teams, roster, standings, skater-leaders.
+  player search/detail, teams (all franchises), current teams, roster,
+  standings, skater-leaders. Player search accepts `active=true` to restrict to
+  currently active players; `/teams/current` returns only the ~32 teams in the
+  league now (derived from live standings, since the stats `team` endpoint also
+  lists defunct/relocated franchises).
 - `NHLService` (`app/services/nhl.py`): implemented as an async `httpx` client —
   live passthrough over three NHL hosts, no caching/persistence. Failures raise
   `NHLAPIError`, mapped to HTTP responses by a handler in `main.py`. The shared
   `httpx.AsyncClient` lives on `app.state.nhl_client` (created in `lifespan`).
-- `app/schemas.py`: `PlayerSearchResult`, `PlayerDetail` (typed); roster /
-  standings / leaders are passthrough JSON. `app/models/` still empty.
+- `app/schemas.py`: `PlayerSearchResult`, `PlayerDetail` (typed, incl.
+  `is_active`), `CurrentTeam` (typed); roster / standings / leaders are
+  passthrough JSON. `app/models/` still empty.
 - No DB-backed game logic yet: no player-pool storage, daily-answer selection,
   or migration tool (e.g. Alembic).
 - Tests: `tests/test_health.py` + `tests/test_nhl.py` (NHL routes mocked via
