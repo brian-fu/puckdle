@@ -40,6 +40,7 @@ class PlayerDetail(BaseModel):
     position: str | None = None
     sweater_number: int | None = None
     team_abbrev: str | None = None
+    is_active: bool | None = None
     birth_date: str | None = None
     birth_country: str | None = None
     height_in_inches: int | None = None
@@ -57,8 +58,34 @@ class PlayerDetail(BaseModel):
             position=payload.get("position"),
             sweater_number=payload.get("sweaterNumber"),
             team_abbrev=payload.get("currentTeamAbbrev"),
+            is_active=payload.get("isActive"),
             birth_date=payload.get("birthDate"),
             birth_country=payload.get("birthCountry"),
             height_in_inches=payload.get("heightInInches"),
             weight_in_pounds=payload.get("weightInPounds"),
+        )
+
+
+class CurrentTeam(BaseModel):
+    """One of the teams currently in the NHL, derived from live standings."""
+
+    abbrev: str
+    name: str | None = None
+    common_name: str | None = None
+    conference: str | None = None
+    division: str | None = None
+    logo: str | None = None
+
+    @classmethod
+    def from_standings(cls, item: dict[str, Any]) -> CurrentTeam:
+        def localized(value: Any) -> str | None:
+            return value.get("default") if isinstance(value, dict) else value
+
+        return cls(
+            abbrev=localized(item.get("teamAbbrev")),
+            name=localized(item.get("teamName")),
+            common_name=localized(item.get("teamCommonName")),
+            conference=item.get("conferenceName"),
+            division=item.get("divisionName"),
+            logo=item.get("teamLogo"),
         )

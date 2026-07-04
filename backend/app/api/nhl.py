@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, Query
 
 from app.api.deps import get_nhl_service
-from app.schemas import PlayerDetail, PlayerSearchResult
+from app.schemas import CurrentTeam, PlayerDetail, PlayerSearchResult
 from app.services import NHLService
 
 router = APIRouter(tags=["NHL"])
@@ -13,9 +13,10 @@ router = APIRouter(tags=["NHL"])
 async def search_players(
     q: str = Query(..., min_length=1, description="Player name query"),
     limit: int = Query(10, ge=1, le=50),
+    active: bool = Query(False, description="Only return currently active players"),
     service: NHLService = Depends(get_nhl_service),
 ) -> list[PlayerSearchResult]:
-    results = await service.search_players(q, limit=limit)
+    results = await service.search_players(q, limit=limit, active=active)
     return [PlayerSearchResult.from_search(item) for item in results]
 
 
@@ -33,6 +34,14 @@ async def list_teams(
     service: NHLService = Depends(get_nhl_service),
 ) -> dict[str, Any]:
     return await service.list_teams()
+
+
+@router.get("/teams/current", response_model=list[CurrentTeam])
+async def list_current_teams(
+    service: NHLService = Depends(get_nhl_service),
+) -> list[CurrentTeam]:
+    teams = await service.list_current_teams()
+    return [CurrentTeam.from_standings(team) for team in teams]
 
 
 @router.get("/teams/{team}/roster")
